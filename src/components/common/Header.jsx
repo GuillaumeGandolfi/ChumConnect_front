@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 
 function Header() {
     return (
@@ -13,8 +14,12 @@ function Header() {
                     <a href="#" className="text-white hover:text-gray-300">Contact/Support</a>
                 </nav>
                 <div className="space-x-4">
-                    <a href="#" className="text-white hover:text-gray-300">Se connecter</a>
-                    <a href="#" className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">S'inscrire</a>
+                    <Link to="/#" className="text-white hover:text-gray-300">
+                        Se connecter
+                    </Link>
+                    <Link to="/signup" className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">
+                        S'inscrire
+                    </Link>
                 </div>
             </div>
         </header>
