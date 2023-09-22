@@ -17,7 +17,7 @@ function Header() {
                     <a href="#" className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">S'inscrire</a>
                 </div>
             </div>
-</header>
+        </header>
     );
 }
 
