@@ -14,7 +14,7 @@ function Header() {
                     <a href="#" className="text-white hover:text-gray-300">Contact/Support</a>
                 </nav>
                 <div className="space-x-4">
-                    <Link to="/#" className="text-white hover:text-gray-300">
+                    <Link to="/signin" className="text-white hover:text-gray-300">
                         Se connecter
                     </Link>
                     <Link to="/signup" className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">
