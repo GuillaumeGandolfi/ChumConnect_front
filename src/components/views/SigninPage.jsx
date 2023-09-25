@@ -1,6 +1,13 @@
 import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from 'react-router-dom';
+
 
 function LoginPage() {
+
+    const { login } = useAuth();
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -35,7 +42,8 @@ function LoginPage() {
 
             const data = await response.json();
             console.log(data);
-            // Ici, vous pouvez gérer la connexion de l'utilisateur
+            login(); // Appelez la fonction login() pour mettre à jour l'état d'authentification
+            navigate('/'); // Redirigez vers la page d'accueil après la connexion réussie
         } catch (error) {
             setError("Une erreur s'est produite lors de la connexion");
             console.error(error);
