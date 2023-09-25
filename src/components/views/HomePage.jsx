@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 // common
 import Header from "../common/Header";
 import Footer from "../common/Footer";
@@ -6,17 +8,30 @@ import Footer from "../common/Footer";
 import LandingPage from "../landing/LandingPage";
 
 import { useAuth } from "../../contexts/AuthContext";
+import AuthenticatedHomePage from "./AuthenticatedHomePage";
 
 function HomePage() {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, refreshToken } = useAuth();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const checkAuthentication = async () => {
+            await refreshToken();
+            setIsLoading(false);
+        };
+        
+        checkAuthentication();
+    }, [refreshToken]);
+
+    if (isLoading) {
+        return <div>Chargement...</div>; // TODO : Faire un composant pour le loading
+    }
     
     return (
         <div>
             <Header />
             { isAuthenticated ? (
-                <div>
-                    <h1>Vous êtes connecté !</h1>
-                </div>
+                <AuthenticatedHomePage />
             ) : (
                 <LandingPage />
             )}

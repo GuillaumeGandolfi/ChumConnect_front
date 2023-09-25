@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const AuthContext = createContext();
 
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
     };
 
-    const refreshToken = async () => {
+    const refreshToken = useCallback(async () => {
         try {
             const response = await fetch("http://localhost:3001/refresh-token", {
                 method: "POST",
@@ -35,7 +35,12 @@ export const AuthProvider = ({ children }) => {
             console.error(error);
             logout(); // En cas d'erreur, déconnectez l'utilisateur
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        // On vérifie si l'utilisateur est authentifié lorsque l'application est chargée
+        refreshToken();
+    }, [refreshToken]);
 
     return (
         <AuthContext.Provider value={{ isAuthenticated, login, logout, refreshToken }}>
