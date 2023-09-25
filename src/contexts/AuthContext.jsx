@@ -28,8 +28,8 @@ export const AuthProvider = ({ children }) => {
                 throw new Error(response.status);
             }
 
-            const data = await response.json();
-            console.log(data);
+            // const data = await response.json();
+            // console.log(data);
             login(); // Mettez à jour l'état d'authentification avec le nouveau token
         } catch (error) {
             console.error(error);
