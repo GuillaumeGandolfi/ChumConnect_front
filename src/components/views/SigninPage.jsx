@@ -34,6 +34,7 @@ function LoginPage() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(formData),
+                credentials: 'include', // pour inclure les cookies dans la requête
             });
 
             if (!response.ok) {
