@@ -32,6 +32,17 @@ export const AuthProvider = ({ children }) => {
 
     const refreshToken = useCallback(async () => {
         try {
+            // On vérifie s'il existe un refresh token
+            const existingRefreshToken = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('refreshToken'))
+                ?.split('=')[1];
+
+            // S'il n'y a pas de refreshToken, on ne fait pas la requête
+            if (!existingRefreshToken) {
+                return;
+            }
+            
             const response = await fetch("http://localhost:3001/refresh-token", {
                 method: "POST",
                 credentials: 'include', // pour inclure les cookies dans la requête

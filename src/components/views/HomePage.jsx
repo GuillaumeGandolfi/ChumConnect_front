@@ -16,12 +16,14 @@ function HomePage() {
 
     useEffect(() => {
         const checkAuthentication = async () => {
-            await refreshToken();
+            if (isAuthenticated) {
+                await refreshToken();
+            }
             setIsLoading(false);
         };
         
         checkAuthentication();
-    }, [refreshToken]);
+    }, [refreshToken, isAuthenticated]);
 
     if (isLoading) {
         return <div>Chargement...</div>; // TODO : Faire un composant pour le loading
