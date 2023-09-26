@@ -3,7 +3,7 @@ function Footer() {
     return (
         <footer className="bg-gray-800 text-white py-6 mt-8">
             <div className="container mx-auto">
-                <div className="flex flex-col md:flex-row justify-between">
+                <div className="flex flex-col md:flex-row justify-between items-center">
                 
                 {/* Colonne À propos */}
                 <div className="md:w-1/3 mb-6 md:mb-0">
