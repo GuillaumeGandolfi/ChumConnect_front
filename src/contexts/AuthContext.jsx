@@ -13,8 +13,21 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
     };
 
-    const logout = () => {
+    const logout = async () => {
         setIsAuthenticated(false);
+
+        try {
+            const response = await fetch("http://localhost:3001/logout", {
+                method: "POST",
+                credentials: 'include', // pour inclure les cookies dans la requête
+            });
+
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const refreshToken = useCallback(async () => {
