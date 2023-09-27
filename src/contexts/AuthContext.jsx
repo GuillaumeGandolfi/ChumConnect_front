@@ -9,11 +9,11 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const login = () => {
+    const setAuthenticated = () => {
         setIsAuthenticated(true);
     };
 
-    const logout = async () => {
+    const setUnauthenticated = async () => {
         setIsAuthenticated(false);
 
         try {
@@ -32,19 +32,26 @@ export const AuthProvider = ({ children }) => {
 
     const refreshToken = useCallback(async () => {
         try {
-            // On vérifie s'il existe un refresh token
-            const existingRefreshToken = document.cookie
-                .split('; ')
-                .find(row => row.startsWith('refreshToken'))
-                ?.split('=')[1];
-
-            // S'il n'y a pas de refreshToken, on ne fait pas la requête
-            if (!existingRefreshToken) {
-                return;
-            }
-            
             const response = await fetch("http://localhost:3001/refresh-token", {
                 method: "POST",
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
+
+            setAuthenticated();
+        } catch (error) {
+            console.error(error);
+            setUnauthenticated();
+        }
+    }, []);
+
+    const checkAuthStatus = useCallback(async () => {
+        try {
+            const response = await fetch("http://localhost:3001/auth-status", {
+                method: "GET",
                 credentials: 'include', // pour inclure les cookies dans la requête
             });
 
@@ -52,22 +59,22 @@ export const AuthProvider = ({ children }) => {
                 throw new Error(response.status);
             }
 
-            // const data = await response.json();
-            // console.log(data);
-            login(); // Mettez à jour l'état d'authentification avec le nouveau token
+            const data = await response.json();
+            setIsAuthenticated(data.isAuthenticated);
         } catch (error) {
-            console.error(error);
-            logout(); // En cas d'erreur, déconnectez l'utilisateur
+            console.error(error)
         }
     }, []);
 
     useEffect(() => {
+        
         // On vérifie si l'utilisateur est authentifié lorsque l'application est chargée
-        refreshToken();
-    }, [refreshToken]);
+        // refreshToken();
+        checkAuthStatus();
+    }, [checkAuthStatus]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, refreshToken }}>
+        <AuthContext.Provider value={{ isAuthenticated, setAuthenticated, setUnauthenticated, refreshToken, checkAuthStatus }}>
             {children}
         </AuthContext.Provider>
     );

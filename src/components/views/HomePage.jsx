@@ -11,19 +11,17 @@ import { useAuth } from "../../contexts/AuthContext";
 import AuthenticatedHomePage from "./AuthenticatedHomePage";
 
 function HomePage() {
-    const { isAuthenticated, refreshToken } = useAuth();
+    const { isAuthenticated, checkAuthStatus } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const checkAuthentication = async () => {
-            if (isAuthenticated) {
-                await refreshToken();
-            }
+            await checkAuthStatus();
             setIsLoading(false);
         };
         
         checkAuthentication();
-    }, [refreshToken, isAuthenticated]);
+    }, [checkAuthStatus]);
 
     if (isLoading) {
         return <div>Chargement...</div>; // TODO : Faire un composant pour le loading
