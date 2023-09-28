@@ -1,7 +1,7 @@
 
 function LandingPage() {
     return (
-        <div>
+        <div className="mb-8">
             <div className="flex flex-col items-center py-12 bg-gray-100">
                 <h1 className="text-4xl font-bold mb-4 text-black"> Découvrez ChumConnect : Votre compagnon de sorties amicales !</h1>
                 <p className="text-lg leading-relaxed mb-6 text-center px-8">
