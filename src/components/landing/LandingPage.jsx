@@ -12,7 +12,7 @@ function LandingPage() {
                 Que vous souhaitiez proposer une sortie ou simplement rejoindre l'aventure d'un autre, 
                 ChumConnect est votre passerelle vers des rencontres amicales inoubliables.
                 </p>
-                <button className="px-6 py-3 bg-black text-white rounded-full hover:bg-gray-700 transition duration-300">Rejoignez-nous !</button>
+                <button className="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300">Rejoignez-nous !</button>
             </div>
             <div className="container mx-auto">
                 <h2 className="text-2xl font-bold text-center mt-8 mb-4">Pourquoi choisir ChumConnect ?</h2>
