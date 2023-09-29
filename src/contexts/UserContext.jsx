@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 
 const UserContext = createContext();
 
@@ -7,19 +8,18 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
+    const { isAuthenticated } = useAuth();
     const [user, setUser] = useState(null);
 
     useEffect(() => {
         // La logique pour charger l'utilisateur courant
         const loadCurrentUser = async () => {
-            // On vérifie si le token est présent dans les cookies
-            // Si oui, on récupère l'utilisateur actuellement connecté
-            // Sinon, on ne fait rien
-            const token = document.cookie.split('; ').find(row => row.startsWith('token='));
-            if (!token) {
+            // Si l'utilisateur n'est pas authentifié, on ne fait rien
+            if (!isAuthenticated) {
                 return;
             }
 
+            // Si l'utilisateur est authentifié, on charge ses informations
             try {
                 const response = await fetch('http://localhost:3001/current-user', {
                     method: "GET",
@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
         };
 
         loadCurrentUser();
-    }, []);
+    }, [isAuthenticated]);
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
