@@ -27,12 +27,17 @@ function Header() {
                 </nav>
                 <div className="flex space-x-4 items-center mt-4 md:mt-0">
                     {isAuthenticated ? (
-                        <button 
-                            onClick={handleLogout} 
-                            className="bg-red-500 px-4 py-2 rounded hover:bg-red-600 text-center"
-                        >
-                            Déconnexion
-                        </button>
+                        <>
+                            <Link to="/profil" className="text-white hover:text-gray-300 mr-4">
+                                Profil
+                            </Link>
+                            <button 
+                                onClick={handleLogout} 
+                                className="bg-red-500 px-4 py-2 rounded hover:bg-red-600 text-center"
+                            >
+                                Déconnexion
+                            </button>
+                        </>
                     ) : (
                         <>
                             <Link to="/signin" className="text-white hover:text-gray-300 text-center md:w-auto">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useUser } from "../../contexts/UserContext";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +11,7 @@ import Footer from "../common/Footer";
 function LoginPage() {
 
     const { setAuthenticated } = useAuth();
+    const { setUser } = useUser();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -48,6 +50,7 @@ function LoginPage() {
             const data = await response.json();
             console.log(data);
             setAuthenticated(); // Appelez la fonction login() pour mettre à jour l'état d'authentification
+            setUser(data.user); // Appelez la fonction setUser() pour mettre à jour l'état de l'utilisateur
             navigate('/'); // Redirigez vers la page d'accueil après la connexion réussie
         } catch (error) {
             setError("Une erreur s'est produite lors de la connexion");
