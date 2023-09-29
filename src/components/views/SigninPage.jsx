@@ -44,16 +44,23 @@ function LoginPage() {
             });
 
             if (!response.ok) {
-                throw new Error(response.status);
+                if (response.status === 401) {
+                    throw new Error("Les identifiants sont incorrects.");
+                } else if (response.status === 400) {
+                    throw new Error("La requête est mal formée.");
+                } else {
+                    throw new Error("Une erreur est survenue lors de la connexion.");
+                }
             }
 
             const data = await response.json();
             console.log(data);
             setAuthenticated(); // Appelez la fonction login() pour mettre à jour l'état d'authentification
             setUser(data.user); // Appelez la fonction setUser() pour mettre à jour l'état de l'utilisateur
+            setFormData({ email: "", password: "" }); // Réinitialisation du formulaire
             navigate('/'); // Redirigez vers la page d'accueil après la connexion réussie
         } catch (error) {
-            setError("Une erreur s'est produite lors de la connexion");
+            setError(error.message); // Mise à jour de l'état de l'erreur avec le message d'erreur spécifique
             console.error(error);
         }
     }
