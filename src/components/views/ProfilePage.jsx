@@ -4,12 +4,12 @@ import { useUser } from '../../contexts/UserContext';
 
 function ProfilePage() {
     const { user } = useUser();
+    console.log(user);
 
     if (!user) {
         return <div>Loading...</div>;
     }
-    console.log(user);
-    
+
     return (
         <div className="min-h-screen flex flex-col">
             <Header />
