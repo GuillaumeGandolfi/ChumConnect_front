@@ -42,6 +42,11 @@ export const AuthProvider = ({ children }) => {
     
             if (response.ok) {
                 setIsAuthenticated(data.isAuthenticated);
+            }  else if (response.status === 401) {
+                // L'utilisateur n'est pas authentifié. Ce n'est pas vraiment une "erreur", 
+                // c'est juste une information. Pas besoin de déconnecter l'utilisateur 
+                // ou de lancer une erreur.
+                setIsAuthenticated(false);
             } else {
                 console.error(data.message);
                 setUnauthenticated();
